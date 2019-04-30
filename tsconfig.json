@@ -3,18 +3,17 @@
     "outDir": "./dist",
     "target": "es5",
     "moduleResolution": "node",
-    "module": "commonjs",
+    "module": "esnext",
     "noImplicitAny": false,
     "removeComments": true,
     "sourceMap": true,
     "jsx": "react",
-    "jsxFactory": "h"
+    "jsxFactory": "h",
+    "lib": [
+      "dom",
+      "es2015"
+    ]
   },
-  "suppressImplicitAnyIndexErrors": true,
-  "lib": [
-    "dom",
-    "es2017"
-  ],
   "baseUrl": ".",
   "exclude": [
     "dist"
