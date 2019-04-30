@@ -1,0 +1,15 @@
+@import "styles/function";
+
+body {
+  display: flex;
+  background: red;
+}
+
+h1 {
+  color: blue;
+  text-align: center;
+}
+
+h3 {
+  transform: scale(3);
+}
