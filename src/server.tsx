@@ -6,9 +6,6 @@ import { combineReducers, createStore } from 'redux'
 import { TransferState } from './helper/transfer-state'
 import { StaticServe } from './helper/static-serve'
 
-const path = require('path')
-const url = require('url')
-
 const turbo = require('turbo-http')
 const fs = require('fs')
 
@@ -34,20 +31,8 @@ const Bootstrap = () => {
 }
 
 const server = turbo.createServer(async function (req, res) {
-	// parse URL
-	const parsedUrl = url.parse(req.url)
-	// extract URL path
-	let pathname = `.${ parsedUrl.pathname }`
-
 	const is_file = StaticServe(res, req.url)
 	if (is_file) return
-
-	const check = fs.existsSync(pathname)
-	if (check && pathname !== './') {
-		const file = fs.readFileSync(pathname)
-		res.setHeader('Content-Length', file.byteLength)
-		return res.write(file)
-	}
 
 	const state = new TransferState()
 
