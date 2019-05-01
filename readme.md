@@ -1,4 +1,4 @@
-# Preact Typescript Boilerplate
+# Preact Typescript SSR Boilerplate
 
 Super Minimalist starter preact typescript SSR, support lazy load routing and serve extremly fast by turbo-http, some plugin is manually modified.
 
