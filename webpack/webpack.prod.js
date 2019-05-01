@@ -2,6 +2,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = {
@@ -23,7 +25,16 @@ module.exports = {
 		},
 		runtimeChunk: {
 			name: 'runtime'
-		}
+		},
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					output: {
+						comments: false,
+					},
+				},
+			}),
+		],
 	},
 	resolve: {
 		extensions: ['.ts', '.tsx', '.js']
@@ -42,7 +53,10 @@ module.exports = {
 				preset: ['default', {discardComments: {removeAll: true}}],
 			},
 			canPrint: false
-		})
+		}),
+		new CopyPlugin([
+			{from: './src/assets',to: './assets'},
+		]),
 	],
 	module: {
 		rules: [
@@ -50,6 +64,15 @@ module.exports = {
 				test: /\.(ts|tsx)$/,
 				exclude: /node_modules/,
 				loader: 'awesome-typescript-loader'
+			},
+			{
+				test: /\.(ts|tsx)$/,
+				enforce: 'pre',
+				use: [
+					{
+						loader: 'tslint-loader',
+					}
+				]
 			},
 			{
 				test: /\.(sass|scss|css)$/,

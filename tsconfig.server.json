@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "importHelpers": true,
+    "target": "esnext",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "outFile" : "./dist/server.js",
+    "jsx": "react",
+    "jsxFactory": "h",
+    "keyofStringsOnly": true,
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "types": [
+      "node"
+    ]
+  },
+  "baseUrl": ".",
+  "include": [
+    "./src/server.tsx"
+  ]
+}
