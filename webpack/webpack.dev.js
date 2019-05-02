@@ -4,6 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
+const util = require('./webpack.util')
 
 module.exports = {
 	devtool: 'source-map',
@@ -44,7 +45,7 @@ module.exports = {
 			chunkFilename: '[name].css'
 		}),
 		new CopyPlugin([
-			{from: './src/assets',to: './assets'},
+			{from: './src/assets', to: './assets'},
 		]),
 		new webpack.HotModuleReplacementPlugin(),
 	],
@@ -68,15 +69,18 @@ module.exports = {
 				test: /\.(sass|scss|css)$/,
 				use: [
 					{
-						loader: MiniCssExtractPlugin.loader,
+						loader: 'style-loader',
 						options: {
-							hmr: true,
-						},
+							hmr: true
+						}
 					},
 					{
 						loader: 'css-loader',
 						options: {
-							modules: true
+							modules: true,
+							camelCase: true,
+							sourceMap: true,
+							getLocalIdent: util.getLocalIndent(true)
 						}
 					},
 					{

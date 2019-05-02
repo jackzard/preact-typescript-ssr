@@ -5,6 +5,7 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
+const util = require('./webpack.util')
 
 module.exports = {
 	output: {
@@ -55,7 +56,7 @@ module.exports = {
 			canPrint: false
 		}),
 		new CopyPlugin([
-			{from: './src/assets',to: './assets'},
+			{from: './src/assets', to: './assets'},
 		]),
 	],
 	module: {
@@ -83,7 +84,9 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							modules: true
+							modules: true,
+							camelCase: true,
+							getLocalIdent: util.getLocalIndent()
 						}
 					},
 					{

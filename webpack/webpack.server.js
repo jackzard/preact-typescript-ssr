@@ -1,5 +1,6 @@
 const path = require('path')
 const NodeExternals = require('webpack-node-externals')
+const util = require('./webpack.util')
 
 module.exports = {
 	mode: 'development',
@@ -23,8 +24,23 @@ module.exports = {
 			{
 				test: /\.(ts|tsx)$/,
 				exclude: /node_modules/,
-				loader: ['babel-loader','awesome-typescript-loader']
+				loader: ['babel-loader', 'awesome-typescript-loader']
 			},
+			{
+				test: /\.(sass|scss|css)$/,
+				use: [
+					{
+						loader: 'css-loader',
+						options: {
+							importLoaders: 1,
+							modules: true,
+							exportOnlyLocals: true,
+							camelCase: true,
+							getLocalIdent: util.getLocalIndent()
+						}
+					}
+				]
+			}
 		]
 	},
 }

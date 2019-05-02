@@ -11,6 +11,7 @@ Super Minimalist starter preact typescript SSR, support lazy load routing and se
  - HMR
  - Webpack Dev Server
  - Transfer State between Server & Browser (No Multiple Ajax)
+ - CSS Modules (SSR & Browser)
  
  
  Modified Plugin :

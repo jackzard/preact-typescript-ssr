@@ -1,7 +1,7 @@
 import { Component, h } from 'preact'
 import { Link } from 'preact-router'
-import { NG } from '../helper/helper'
 import { TransferState } from '../helper/transfer-state'
+import style from './home.scss'
 
 interface HomeProps {
 	state: TransferState
@@ -23,7 +23,7 @@ export class HomePage extends Component<HomeProps, any> {
 				url: 'https://jsonplaceholder.typicode.com/todos/1',
 				method: 'get',
 			},
-			cache:true
+			cache: true
 		})
 
 		this.setState({data: ajax.data})
@@ -37,7 +37,11 @@ export class HomePage extends Component<HomeProps, any> {
 		return <div ref={ ref => this.ref = ref }>
 			Homepage : { state.data.id }
 			<br/>
-			<Link href={ '/lazy' }>
+
+			<div class={ style.homeTest3 }>
+				Test Style
+			</div>
+			<Link href={ '/lazy' } class={ style.homeDemo }>
 				Lazy Load
 			</Link>
 		</div>
