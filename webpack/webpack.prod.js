@@ -46,7 +46,7 @@ module.exports = {
 			template: './src/index.html'
 		}),
 		new MiniCssExtractPlugin({
-			filename: 'style.[chunkhash].css',
+			chunkFilename: 'style.[chunkhash].css',
 		}),
 		new OptimizeCssAssetsPlugin({
 			cssProcessor: require('cssnano'),

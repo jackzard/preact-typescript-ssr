@@ -33,10 +33,11 @@ export const StaticServe = (res, req_url): boolean => {
 		res.statusCode = 404
 		res.setHeader('Content-Length', 0)
 		res.write(Buffer.from(''))
+		return true
 	}
 
 	const file = fs.readFileSync(path_file)
-	res.setHeader('Content-Length',file.byteLength)
+	res.setHeader('Content-Length', file.byteLength)
 	res.write(file)
 
 	return true

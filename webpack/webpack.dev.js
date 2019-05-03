@@ -80,7 +80,7 @@ module.exports = {
 							modules: true,
 							camelCase: true,
 							sourceMap: true,
-							getLocalIdent: util.getLocalIndent(true)
+							getLocalIdent: util.getLocalIndent()
 						}
 					},
 					{
