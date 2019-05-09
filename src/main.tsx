@@ -8,7 +8,7 @@ import { TransferState } from './helper/transfer-state'
 const store = createStore(RootReducer)
 
 const state = new TransferState()
-let server_data = window[state.KEY]
+let server_data = window[state.KEY] || {}
 state.storeData(server_data)
 
 
