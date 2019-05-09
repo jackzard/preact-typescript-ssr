@@ -1,12 +1,7 @@
 module.exports = (style) => {
-	let id = '_s'
-	// Generate Id based on total class in module, because css module give different id between browser and node
-	for (const cls in style.locals) {
-		id += `${cls.length}`
-	}
-	id += `${Object.keys(style.locals || {}).length}`
-
 	const [_, css, media, sourceMap] = style[0]
+	// Generate Id based on length of css , because css module give different id between browser and node
+	id = `s${ media.length }${ css.length }`
 
 	// Server Side
 	if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -49,7 +44,9 @@ module.exports = (style) => {
 }
 
 function removal(el) {
-	el.parentNode.removeChild(el)
+	if(el && el.parentNode){
+		el.parentNode.removeChild(el)
+	}
 }
 
 // Base64 encoding and decoding - The "Unicode Problem"

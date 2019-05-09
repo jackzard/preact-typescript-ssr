@@ -7,7 +7,7 @@ module.exports.pitch = (request) => {
 		this.cacheable()
 	}
 
-	const insertCss = require.resolve('./insert-css.js')
+	const insertCss = require.resolve('./insert-css.min.js')
 	return `
 		var css = require(${ stringifyRequest(this, `!!${ request }`) });
 		var insertCss = require(${ stringifyRequest(this, `!!${ insertCss }`) });
