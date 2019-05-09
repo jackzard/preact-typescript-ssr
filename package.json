@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "dayjs": "^1.8.14",
     "preact": "^8.4.2",
     "preact-async-route": "^2.2.1",
     "preact-redux": "jackzard/preact-redux",

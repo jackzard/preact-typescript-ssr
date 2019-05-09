@@ -1,6 +1,8 @@
 import { combineLatest } from 'rxjs'
 import { AX } from './ax'
 
+const dayjs = require('dayjs')
+
 export interface TransferRequestAjax {
 	method: 'get' | 'post' | 'put' | 'delete'
 	url: string
@@ -9,12 +11,14 @@ export interface TransferRequestAjax {
 
 export interface TransferStateAjax {
 	key: string | number
-	cache?: boolean
+	cache?: number // number of hours to cached
 	requests: TransferRequestAjax[] | TransferRequestAjax
 }
 
 export class TransferState {
 	public KEY = '___TRANSFER___'
+
+	private timekey = '_t'
 	private is_browser
 	private data: any = {}
 
@@ -27,7 +31,7 @@ export class TransferState {
 	}
 
 	private async runRequest(req: TransferRequestAjax | TransferRequestAjax[]) {
-		let data: any = Array.isArray(req) ? [] : null
+		let data: any = Array.isArray(req) ? [] : {}
 
 		if (Array.isArray(req)) {
 			const obs_lists = req.map(req => this.getAX(req))
@@ -43,20 +47,45 @@ export class TransferState {
 		if (!this.is_browser) {
 			// Server side always run promise
 			this.data[c.key] = await this.runRequest(c.requests)
+			this.setTimeRequest(c)
 			return this.data[c.key]
 		} else {
 			// Browser side
-			const res = this.data[c.key]
-			if (typeof res !== 'undefined') {
-				// Skip if need cache
-				if (!c.cache) delete this.data[c.key]
-				return res
+			let res = this.data[c.key]
+
+			if (typeof res === 'undefined') {
+				this.data[c.key] = await this.runRequest(c.requests)
+				this.setTimeRequest(c)
+				res = this.data[c.key]
 			}
 
-			return await this.runRequest(c.requests)
+			if (!c.cache) {
+				delete this.data[c.key]
+			} else {
+				const cache_time = this.data[`${ this.timekey }${ c.key }`]
+				if (!cache_time) {
+					delete this.data[c.key]
+				} else {
+
+					const now = dayjs().valueOf()
+					if (cache_time < now) {
+						delete this.data[c.key]
+					}
+				}
+			}
+
+			return res
 		}
 	}
 
+	// Set Cache by Time
+	setTimeRequest(c: TransferStateAjax) {
+		if (c.cache) {
+			this.data[`${ this.timekey }${ c.key }`] = dayjs()
+				.add(c.cache, 'hour')
+				.valueOf()
+		}
+	}
 
 	storeData(data) {
 		this.data = data
@@ -64,6 +93,10 @@ export class TransferState {
 
 	getData() {
 		return this.data
+	}
+
+	removeData(key: string | number) {
+		delete this.data[key]
 	}
 
 }
