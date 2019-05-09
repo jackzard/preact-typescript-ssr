@@ -2,10 +2,8 @@ const path = require('path')
 const NodeExternals = require('webpack-node-externals')
 const util = require('./webpack.util')
 
-
-
 module.exports = {
-	mode: 'development',
+	mode: 'production',
 	entry: [
 		'./src/server.tsx'
 	],
@@ -32,15 +30,23 @@ module.exports = {
 				test: /\.(sass|scss|css)$/,
 				use: [
 					{
+						loader: path.resolve(__dirname, './loaders/isomorphic-style-loader.js')
+					},
+					{
 						loader: 'css-loader',
 						options: {
-							importLoaders: 1,
+							importLoaders: 3,
 							modules: true,
-							exportOnlyLocals: true,
 							camelCase: true,
 							getLocalIdent: util.getLocalIndent()
 						}
-					}
+					},
+					{
+						loader: 'postcss-loader',
+					},
+					{
+						loader: 'sass-loader',
+					},
 				]
 			}
 		]

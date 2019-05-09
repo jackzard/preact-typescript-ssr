@@ -31,7 +31,7 @@ export class TransferState {
 
 		if (Array.isArray(req)) {
 			const obs_lists = req.map(req => this.getAX(req))
-			data = await combineLatest(obs_lists)
+			data = await combineLatest(obs_lists).toPromise()
 		} else {
 			data = await this.getAX(req).toPromise()
 		}

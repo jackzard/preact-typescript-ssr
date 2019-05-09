@@ -1,6 +1,8 @@
 import { Component, h } from 'preact'
+import sty from './lazy.scss'
+import { withStyles } from '../helper/styling/styles'
 
-export default class Lazy extends Component<any> {
+class Lz extends Component<any> {
 
 	componentDidMount() {
 		console.log('Async component mounted')
@@ -8,9 +10,11 @@ export default class Lazy extends Component<any> {
 
 	render() {
 		return (
-			<div>
+			<div class={ sty.imSuperLazy }>
 				<span>Lazy Loaded</span>
 			</div>
 		)
 	}
 }
+
+export default withStyles(sty)(Lz)

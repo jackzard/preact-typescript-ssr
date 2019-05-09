@@ -1,4 +1,3 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
@@ -40,10 +39,6 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			template: './src/index.html'
 		}),
-		new MiniCssExtractPlugin({
-			filename: '[name].css',
-			chunkFilename: '[name].css'
-		}),
 		new CopyPlugin([
 			{from: './src/assets', to: './assets'},
 		]),
@@ -69,10 +64,7 @@ module.exports = {
 				test: /\.(sass|scss|css)$/,
 				use: [
 					{
-						loader: 'style-loader',
-						options: {
-							hmr: true
-						}
+						loader: path.resolve(__dirname, './loaders/isomorphic-style-loader.js')
 					},
 					{
 						loader: 'css-loader',
@@ -82,6 +74,9 @@ module.exports = {
 							sourceMap: true,
 							getLocalIdent: util.getLocalIndent()
 						}
+					},
+					{
+						loader: 'postcss-loader',
 					},
 					{
 						loader: 'sass-loader',

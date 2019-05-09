@@ -3,8 +3,11 @@ import { h } from 'preact'
 import { HomePage } from './pages/home'
 import AsyncRoute from 'preact-async-route'
 import { GetDynamicComponent } from './helper/helper'
+import { withStyles } from './helper/styling/styles'
+import sty from './styles.scss'
 
-export const AllRouter = (props) => (
+
+const Routers = (props) => (
 	<div id="app">
 		<Router url={ props.url }>
 			<HomePage path="/" state={ props.state }/>
@@ -21,3 +24,5 @@ export const AllRouter = (props) => (
 		</Router>
 	</div>
 )
+
+export const AllRouter = withStyles(sty)(Routers)

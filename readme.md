@@ -12,6 +12,7 @@ Super Minimalist starter preact typescript SSR, support lazy load routing and se
  - Webpack Dev Server
  - Transfer State between Server & Browser (No Multiple Ajax)
  - CSS Modules (SSR & Browser)
+ - Isomorphic Css Modules (Reuse css from server to browser)
  
  
  Modified Plugin :

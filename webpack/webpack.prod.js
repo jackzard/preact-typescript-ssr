@@ -1,7 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
@@ -43,17 +41,8 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			template: './src/index.html'
-		}),
-		new MiniCssExtractPlugin({
-			chunkFilename: 'style.[chunkhash].css',
-		}),
-		new OptimizeCssAssetsPlugin({
-			cssProcessor: require('cssnano'),
-			cssProcessorPluginOptions: {
-				preset: ['default', {discardComments: {removeAll: true}}],
-			},
-			canPrint: false
+			template: './src/index.html',
+			minify: true
 		}),
 		new CopyPlugin([
 			{from: './src/assets', to: './assets'},
@@ -79,29 +68,22 @@ module.exports = {
 				test: /\.(sass|scss|css)$/,
 				use: [
 					{
-						loader: MiniCssExtractPlugin.loader
+						loader: path.resolve(__dirname, './loaders/isomorphic-style-loader.js')
 					},
 					{
 						loader: 'css-loader',
 						options: {
+							importLoaders: 3,
 							modules: true,
 							camelCase: true,
 							getLocalIdent: util.getLocalIndent()
 						}
 					},
 					{
-						loader: 'sass-loader',
+						loader: 'postcss-loader',
 					},
 					{
-						loader: 'postcss-loader',
-						options: {
-							ident: 'postcss',
-							plugins: [
-								require('autoprefixer')({}),
-								require('cssnano')({preset: 'default'})
-							],
-							minimize: true
-						}
+						loader: 'sass-loader',
 					},
 				]
 			}

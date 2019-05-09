@@ -2,12 +2,13 @@ import { Component, h } from 'preact'
 import { Link } from 'preact-router'
 import { TransferState } from '../helper/transfer-state'
 import style from './home.scss'
+import { withStyles } from '../helper/styling/styles'
 
 interface HomeProps {
 	state: TransferState
 }
 
-export class HomePage extends Component<HomeProps, any> {
+class Home extends Component<HomeProps, any> {
 
 	state = {
 		data: {}
@@ -17,16 +18,16 @@ export class HomePage extends Component<HomeProps, any> {
 	async componentWillMount() {
 		const state = this.props.state
 
-		const ajax = await state.getAjax({
-			key: 'homepage',
-			requests: {
-				url: 'https://jsonplaceholder.typicode.com/todos/1',
-				method: 'get',
-			},
-			cache: true
-		})
-
-		this.setState({data: ajax.data})
+		// const ajax = await state.getAjax({
+		// 	key: 'homepage',
+		// 	requests: {
+		// 		url: 'http://dummy.restapiexample.com/api/v1/employees',
+		// 		method: 'get',
+		// 	},
+		// 	cache: true
+		// })
+		//
+		// this.setState({data: ajax.data})
 	}
 
 	componentDidMount(): void {
@@ -47,3 +48,5 @@ export class HomePage extends Component<HomeProps, any> {
 		</div>
 	}
 }
+
+export const HomePage = withStyles(style)(Home)
