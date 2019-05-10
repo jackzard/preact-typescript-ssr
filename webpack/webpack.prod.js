@@ -81,6 +81,7 @@ module.exports = {
 					},
 					{
 						loader: 'postcss-loader',
+						options: {parser: 'postcss-scss'}
 					},
 					{
 						loader: 'sass-loader',

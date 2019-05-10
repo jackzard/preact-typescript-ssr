@@ -64,7 +64,7 @@ module.exports = {
 				test: /\.(sass|scss|css)$/,
 				use: [
 					{
-						loader: path.resolve(__dirname, './loaders/isomorphic-style-loader.min.js')
+						loader: path.resolve(__dirname, './loaders/isomorphic-style-loader.js')
 					},
 					{
 						loader: 'css-loader',
@@ -77,6 +77,7 @@ module.exports = {
 					},
 					{
 						loader: 'postcss-loader',
+						options: {parser: 'postcss-scss'}
 					},
 					{
 						loader: 'sass-loader',

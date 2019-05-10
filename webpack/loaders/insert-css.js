@@ -1,7 +1,8 @@
 module.exports = (style) => {
-	const [_, css, media, sourceMap] = style[0]
+	const [moduleId, css, media, sourceMap] = style[0]
 	// Generate Id based on length of css , because css module give different id between browser and node
-	id = `s${ media.length }${ css.length }`
+	const dev = process.env.NODE_ENV === 'development'
+	id = dev ? `s${ moduleId }` : `s${ media.length }${ css.length }`
 
 	// Server Side
 	if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -10,15 +11,18 @@ module.exports = (style) => {
 
 	// Browser Side
 	let elem = document.getElementById(id)
+	let create = false
 
-	if (elem) return removal.bind(null, elem)
-
-	elem = document.createElement('style')
-	elem.setAttribute('type', 'text/css')
-	elem.id = id
-
-	if (media) {
-		elem.setAttribute('media', media)
+	if (elem) {
+		if (!dev) return removal.bind(null, elem)
+	} else {
+		create = true
+		elem = document.createElement('style')
+		elem.setAttribute('type', 'text/css')
+		elem.id = id
+		if (media) {
+			elem.setAttribute('media', media)
+		}
 	}
 
 	let cssText = css
@@ -37,14 +41,17 @@ module.exports = (style) => {
 		elem.textContent = cssText
 	}
 
-	document.head.appendChild(elem)
+	if (create) {
+		document.head.appendChild(elem)
+	}
+
 
 	// Return removal
 	return removal.bind(null, elem)
 }
 
 function removal(el) {
-	if(el && el.parentNode){
+	if (el && el.parentNode) {
 		el.parentNode.removeChild(el)
 	}
 }

@@ -1,7 +1,9 @@
 module.exports = {
 	plugins: {
 		'postcss-preset-env': {},
-		'cssnano': {},
+		'cssnano': {
+			discardComments: {removeAll: true}
+		},
 	},
 	minimize: true
 }
