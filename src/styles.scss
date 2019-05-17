@@ -1,5 +1,3 @@
-@import "styles/function";
-
 body {
   display: flex;
   background: white;
@@ -12,4 +10,8 @@ h1 {
 
 h3 {
   transform: scale(3);
+}
+
+.someRootClass{
+  font-size: 20px;
 }

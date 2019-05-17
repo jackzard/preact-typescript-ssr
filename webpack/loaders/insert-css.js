@@ -1,8 +1,9 @@
 module.exports = (style) => {
-	const [moduleId, css, media, sourceMap] = style[0]
+	const [module, css, media, sourceMap] = style[0]
+
 	// Generate Id based on length of css , because css module give different id between browser and node
 	const dev = process.env.NODE_ENV === 'development'
-	id = dev ? `s${ moduleId }` : `s${ media.length }${ css.length }`
+	const id = dev ? module : style.locals._module_id
 
 	// Server Side
 	if (typeof window === 'undefined' || typeof document === 'undefined') {

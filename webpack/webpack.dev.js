@@ -8,8 +8,6 @@ const util = require('./webpack.util')
 module.exports = {
 	devtool: 'source-map',
 	devServer: {
-		noInfo: true,
-		quiet: true,
 		historyApiFallback: true,
 		contentBase: path.join('..', 'dist'),
 		hot: true,
@@ -30,9 +28,6 @@ module.exports = {
 		runtimeChunk: {
 			name: 'runtime'
 		}
-	},
-	resolve: {
-		extensions: ['.ts', '.tsx', '.js']
 	},
 	plugins: [
 		new CleanWebpackPlugin(),
@@ -69,19 +64,19 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
+							importLoaders: 1,
 							modules: true,
 							camelCase: true,
 							sourceMap: true,
-							getLocalIdent: util.getLocalIndent()
+							getLocalIdent: util.getLocalIndent(true)
 						}
-					},
-					{
-						loader: 'postcss-loader',
-						options: {parser: 'postcss-scss'}
 					},
 					{
 						loader: 'sass-loader',
 					},
+					{
+						loader: 'postcss-loader',
+					}
 				]
 			}
 		]

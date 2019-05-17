@@ -24,7 +24,6 @@
       "es2015"
     ]
   },
-  "baseUrl": ".",
   "exclude": [
     "dist"
   ]

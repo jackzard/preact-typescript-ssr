@@ -5,18 +5,22 @@ const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 const util = require('./webpack.util')
 
+
 module.exports = {
+	mode : 'production',
 	output: {
 		path: path.resolve(__dirname, '..', 'dist'),
 		filename: '[name].[chunkhash].js',
 		chunkFilename: '[name].[chunkhash].js',
 	},
 	optimization: {
+		minimize: true,
 		splitChunks: {
 			cacheGroups: {
 				vendors: {
-					test: /[\\/]node_modules[\\/]/,
-					name: 'vendors',
+					// test: /[\\/]node_modules[\\/]/,
+					test: /[\\/]node_modules\/(preact|rxjs|axios|redux)/,
+					name: 'vendor',
 					enforce: true,
 					chunks: 'all'
 				}
@@ -35,14 +39,10 @@ module.exports = {
 			}),
 		],
 	},
-	resolve: {
-		extensions: ['.ts', '.tsx', '.js']
-	},
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			template: './src/index.html',
-			minify: true
+			template: './src/index.html'
 		}),
 		new CopyPlugin([
 			{from: './src/assets', to: './assets'},
@@ -76,16 +76,15 @@ module.exports = {
 							importLoaders: 3,
 							modules: true,
 							camelCase: true,
-							getLocalIdent: util.getLocalIndent()
+							getLocalIdent: util.getLocalIndent(),
 						}
 					},
 					{
-						loader: 'postcss-loader',
-						options: {parser: 'postcss-scss'}
+						loader : 'postcss-loader',
 					},
 					{
 						loader: 'sass-loader',
-					},
+					}
 				]
 			}
 		]

@@ -21,7 +21,7 @@ export const withStyles = (...styles) => Comp => class WrapStyles extends Compon
 	}
 
 	componentWillUnmount() {
-		setTimeout(() => this.styles_list.map(s => s()))
+		// this.styles_list.map(s => s())
 	}
 
 	render(props) {

@@ -1,6 +1,8 @@
 const path = require('path')
 const NodeExternals = require('webpack-node-externals')
 const util = require('./webpack.util')
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader')
+const TerserPlugin = require('terser-webpack-plugin')
 
 module.exports = {
 	mode: 'production',
@@ -12,12 +14,28 @@ module.exports = {
 		filename: 'server.js',
 	},
 	resolve: {
-		extensions: ['.ts', '.tsx', '.js']
+		extensions: ['.ts', '.tsx', '.js'],
+		plugins: [
+			new TsConfigPathsPlugin(),
+		]
 	},
 	externals: [
 		NodeExternals()
 	],
-	plugins: [],
+	plugins: [
+	],
+	optimization: {
+		minimize: true,
+		minimizer: [
+			new TerserPlugin({
+				terserOptions: {
+					output: {
+						comments: false,
+					},
+				},
+			}),
+		],
+	},
 	target: 'node',
 	module: {
 		rules: [
@@ -35,19 +53,18 @@ module.exports = {
 					{
 						loader: 'css-loader',
 						options: {
-							importLoaders: 3,
+							importLoaders: 5,
 							modules: true,
 							camelCase: true,
-							getLocalIdent: util.getLocalIndent()
+							getLocalIdent: util.getLocalIndent(),
 						}
 					},
 					{
-						loader: 'postcss-loader',
-						options: {parser: 'postcss-scss'}
+						loader : 'postcss-loader',
 					},
 					{
 						loader: 'sass-loader',
-					},
+					}
 				]
 			}
 		]

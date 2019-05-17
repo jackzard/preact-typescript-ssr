@@ -59,12 +59,13 @@ const server = turbo.createServer(async function (req, res) {
 	const html = HTMLEmbed(
 		components,
 		`<script>window.${ state.KEY } = ${ str_data };</script>`,
-		`${ styles_string }`
+		styles_string
 	)
 	const buff = Buffer.from(html)
 
 	res.setHeader('Content-Length', buff.length)
 	res.write(buff)
+
 })
 
 Bootstrap()

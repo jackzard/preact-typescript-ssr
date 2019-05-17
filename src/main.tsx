@@ -1,9 +1,9 @@
 import { h, render } from 'preact'
-import { AllRouter } from './all-router'
 import { Provider } from 'preact-redux'
 import { RootReducer } from './store/data'
 import { createStore } from 'redux'
 import { TransferState } from './helper/transfer-state'
+import { AllRouter } from './all-router'
 
 const store = createStore(RootReducer)
 

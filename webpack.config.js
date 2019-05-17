@@ -1,4 +1,5 @@
 const path = require('path')
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader')
 
 module.exports = env => {
 	const prod = env === 'production'
@@ -8,6 +9,12 @@ module.exports = env => {
 		mode: prod ? 'production' : 'development',
 		devtool: prod ? '' : 'source-map',
 		entry: './src/main.tsx',
+		resolve: {
+			extensions: ['.ts', '.tsx', '.js'],
+			plugins: [
+				new TsConfigPathsPlugin(),
+			],
+		},
 		output: {
 			path: path.resolve(__dirname, 'dist'),
 			filename: '[name].[hash].js',
