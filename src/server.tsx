@@ -40,8 +40,9 @@ const server = turbo.createServer(async function (req, res) {
 
 	// Style collector
 	let styles_string = ''
-	const insertCss = (css: string) => {
-		styles_string += css
+	const style_obj = {}
+	const insertCss = (id: string, css: string) => {
+		style_obj[id] = css
 	}
 
 	const components = await render(
@@ -55,6 +56,11 @@ const server = turbo.createServer(async function (req, res) {
 
 	const data = state.getData()
 	const str_data = JSON.stringify(data)
+
+	// Parse Style Object
+	for (const id in style_obj) {
+		styles_string += `<style type="text/css" id="${ id }">${ style_obj[id] }</style>`
+	}
 
 	const html = HTMLEmbed(
 		components,

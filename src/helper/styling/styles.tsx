@@ -13,7 +13,7 @@ export const withStyles = (...styles) => Comp => class WrapStyles extends Compon
 			} else {
 				if (this.context.insertRootCss) {
 					const {id, css} = style._insertCss()
-					this.context.insertRootCss(`<style type="text/css" id="${ id }">${ css }</style>`)
+					this.context.insertRootCss(id, css)
 				}
 			}
 		})
@@ -31,7 +31,7 @@ export const withStyles = (...styles) => Comp => class WrapStyles extends Compon
 
 
 interface IStyleRoot {
-	insertCss: (style: string) => void
+	insertCss: (id: string, style: string) => void
 }
 
 export class StyleRootProvider extends Component<IStyleRoot> {
