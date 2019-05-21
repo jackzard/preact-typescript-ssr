@@ -70,6 +70,7 @@ const server = turbo.createServer(async function (req, res) {
 	const buff = Buffer.from(html)
 
 	res.setHeader('Content-Length', buff.length)
+	res.setHeader('Content-Type', 'text/html')
 	res.write(buff)
 
 })
